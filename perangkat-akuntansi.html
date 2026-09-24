@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Perangkat Pembelajaran Akuntansi — SMK AKL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F2A4A; --navy-deep:#091B33; --emerald-c:#0F9D75; --white:#FFFFFF;
+  --gray-light:#F2F5F7; --ink:#1C2733; --ink-soft:#5B6B7A; --line:#E1E7EC;
+  box-sizing:border-box;
+  padding-top: env(safe-area-inset-top,0px); padding-bottom: env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:inherit; margin:0; padding:0;}
+html{scroll-padding-top: env(safe-area-inset-top,0px);}
+body{font-family:'Inter',system-ui,sans-serif; background:var(--gray-light); color:var(--ink); height:100%;}
+h1,h2,h3{font-family:'Poppins',sans-serif; color:var(--navy);}
+a{color:inherit;}
+.app{display:flex; min-height:100vh;}
+.sidebar{width:230px; background:var(--navy-deep); color:#DCE6EE; flex-shrink:0; padding:20px 0; position:sticky; top:0; height:100vh; overflow-y:auto;}
+.brand{padding:0 18px 16px; border-bottom:1px solid rgba(255,255,255,.12); margin-bottom:10px;}
+.brand strong{color:#fff; font-family:'Poppins',sans-serif; font-size:15px; display:block;}
+.brand span{font-size:12px; color:#9FB2C2;}
+.nav-item{display:block; padding:10px 18px; font-size:13.5px; cursor:pointer; border-left:3px solid transparent; color:#C4D3DE;}
+.nav-item:hover{background:rgba(255,255,255,.06);}
+.nav-item.active{background:rgba(15,157,117,.18); border-left-color:var(--emerald-c); color:#fff;}
+.main{flex:1; min-width:0;}
+.topbar{background:#fff; border-bottom:1px solid var(--line); padding:14px 26px; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;}
+.topbar .clock{font-family:'Poppins',sans-serif; font-weight:600; color:var(--navy); font-size:15px;}
+.content{padding:26px; max-width:980px;}
+.section{display:none;}
+.section.active{display:block;}
+.card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:20px; margin-bottom:16px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:780px){.grid2,.grid4{grid-template-columns:1fr 1fr;} .app{flex-direction:column;} .sidebar{width:100%; height:auto; position:relative;}}
+.stat{background:#fff; border:1px solid var(--line); border-left:4px solid var(--emerald-c); border-radius:8px; padding:14px;}
+.stat .num{font-family:'Poppins',sans-serif; font-size:24px; color:var(--navy); font-weight:700;}
+.stat .label{font-size:12.5px; color:var(--ink-soft);}
+.progress-bar{background:var(--line); border-radius:20px; height:12px; overflow:hidden; margin-top:6px;}
+.progress-fill{background:var(--emerald-c); height:100%;}
+table{width:100%; border-collapse:collapse; font-size:13.5px;}
+th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+th{background:var(--navy); color:#fff; font-family:'Poppins',sans-serif; font-weight:600; font-size:12.5px;}
+tr:nth-child(even) td{background:#FAFBFC;}
+.accordion-head{cursor:pointer; background:var(--navy); color:#fff; padding:12px 16px; border-radius:8px; font-family:'Poppins',sans-serif; font-size:14px; font-weight:600; display:flex; justify-content:space-between; margin-bottom:2px;}
+.accordion-body{display:none; padding:14px 16px; border:1px solid var(--line); border-top:none; border-radius:0 0 8px 8px; margin-bottom:10px; font-size:13.5px; line-height:1.6;}
+.accordion-body.open{display:block;}
+.pill{display:inline-block; background:var(--emerald-c); color:#fff; font-size:11px; padding:2px 9px; border-radius:20px; margin-right:6px;}
+.sticky{background:#FFF7D6; border:1px solid #F0DE9C; border-radius:6px; padding:10px; font-size:13px; margin-bottom:8px;}
+textarea,input,select{font-family:'Inter',sans-serif; font-size:13.5px; padding:7px 9px; border:1px solid var(--line); border-radius:6px; width:100%;}
+button{font-family:'Poppins',sans-serif; background:var(--emerald-c); color:#fff; border:none; padding:9px 16px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:600;}
+button:hover{opacity:.9;}
+.quiz-q{border-bottom:1px solid var(--line); padding:12px 0;}
+.quiz-opt{display:block; margin:5px 0; font-size:13.5px; cursor:pointer;}
+.result-box{padding:10px; border-radius:6px; margin-top:6px; font-size:13px; font-weight:600;}
+.ok{background:#E4F7EF; color:#0F9D75;}
+.bad{background:#FCE9E9; color:#C0392B;}
+.glos-item{border-bottom:1px solid var(--line); padding:9px 0; font-size:13.5px;}
+.glos-item b{color:var(--navy);}
+.search-box{margin-bottom:14px;}
+:root:not([data-theme="light"]){}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="sidebar">
+    <div class="brand"><strong>SMK AKL</strong><span>Perangkat Pembelajaran · Akuntansi Dasar</span></div>
+    <div class="nav-item active" data-target="beranda">Beranda</div>
+    <div class="nav-item" data-target="cp">Capaian Pembelajaran</div>
+    <div class="nav-item" data-target="atp">Alur Tujuan Pembelajaran</div>
+    <div class="nav-item" data-target="modul">Modul Ajar</div>
+    <div class="nav-item" data-target="materi">Materi Pembelajaran</div>
+    <div class="nav-item" data-target="banksoal">Bank Soal</div>
+    <div class="nav-item" data-target="simulator">Simulator Jurnal</div>
+    <div class="nav-item" data-target="glosarium">Glosarium</div>
+    <div class="nav-item" data-target="referensi">Referensi</div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div><strong id="pagetitle" style="font-family:Poppins,sans-serif;color:var(--navy)">Beranda</strong></div>
+      <div class="clock" id="clock">--:--:--</div>
+    </div>
+    <div class="content">
+
+      <!-- BERANDA -->
+      <div class="section active" id="beranda">
+        <div class="card">
+          <h2>Selamat datang, Bapak/Ibu Guru</h2>
+          <p style="margin-top:8px;color:var(--ink-soft)">Portal ini memuat perangkat pembelajaran mata pelajaran <b>Akuntansi Dasar</b> untuk Program Keahlian Akuntansi dan Keuangan Lembaga (AKL), disusun mengikuti Kurikulum Merdeka. Isi identitas di bawah sesuai sekolah Anda.</p>
+          <div class="grid2" style="margin-top:14px">
+            <div><label style="font-size:12px;color:var(--ink-soft)">Nama Sekolah</label><input value="SMK Negeri ..." id="fSekolah"></div>
+            <div><label style="font-size:12px;color:var(--ink-soft)">Nama Guru</label><input value="..." id="fGuru"></div>
+            <div><label style="font-size:12px;color:var(--ink-soft)">Fase / Kelas</label><input value="Fase E / Kelas X" id="fKelas"></div>
+            <div><label style="font-size:12px;color:var(--ink-soft)">Semester &amp; Tahun Ajaran</label><input value="Ganjil, 2026/2027" id="fSem"></div>
+          </div>
+        </div>
+
+        <div class="grid4">
+          <div class="stat"><div class="num">1</div><div class="label">Capaian Pembelajaran</div></div>
+          <div class="stat"><div class="num">10</div><div class="label">Tujuan Pembelajaran</div></div>
+          <div class="stat"><div class="num">17</div><div class="label">Pertemuan (ATP)</div></div>
+          <div class="stat"><div class="num">10</div><div class="label">Bab Materi</div></div>
+        </div>
+
+        <div class="grid2" style="margin-top:16px">
+          <div class="card">
+            <h3 style="font-size:15px">Progres Semester</h3>
+            <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+            <p style="font-size:12.5px;color:var(--ink-soft);margin-top:6px">Pertemuan ke-6 dari 17 (ubah nilai di kode sesuai realisasi)</p>
+            <h3 style="font-size:15px;margin-top:16px">Pengingat Jadwal</h3>
+            <p style="font-size:13px;color:var(--ink-soft)">Senin &amp; Kamis, 07.00–09.15 — Kelas X AKL 1</p>
+          </div>
+          <div class="card">
+            <h3 style="font-size:15px">Catatan Guru</h3>
+            <div id="notes"></div>
+            <textarea id="noteInput" rows="2" placeholder="Tulis catatan baru..."></textarea>
+            <button style="margin-top:8px" onclick="addNote()">Tambah Catatan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CP -->
+      <div class="section" id="cp">
+        <div class="card">
+          <h2>Capaian Pembelajaran — Akuntansi Dasar (Fase E)</h2>
+          <p style="margin-top:10px;line-height:1.7">Pada akhir Fase E, peserta didik mampu memahami proses bisnis, profesi, prinsip, konsep dasar akuntansi, serta menerapkan tahapan siklus akuntansi pada perusahaan jasa mulai dari analisis transaksi, jurnal, buku besar, neraca saldo, jurnal penyesuaian, kertas kerja, hingga penyusunan laporan keuangan sederhana, sebagai dasar pengambilan keputusan ekonomi.</p>
+          <h3 style="font-size:15px;margin-top:16px">Kompetensi yang Dikuasai Siswa</h3>
+          <ul style="margin:10px 0 0 18px; font-size:13.5px; line-height:1.8">
+            <li>Menjelaskan pengertian, fungsi, dan bidang akuntansi.</li>
+            <li>Menyusun persamaan dasar akuntansi dari transaksi keuangan.</li>
+            <li>Mencatat transaksi ke dalam jurnal umum.</li>
+            <li>Memposting jurnal ke buku besar dan menyusun neraca saldo.</li>
+            <li>Membuat jurnal penyesuaian dan kertas kerja.</li>
+            <li>Menyusun laporan keuangan perusahaan jasa.</li>
+          </ul>
+          <h3 style="font-size:15px;margin-top:16px">Indikator Keberhasilan</h3>
+          <p style="font-size:13.5px;color:var(--ink-soft);margin-top:6px">Siswa dapat menyelesaikan siklus akuntansi penuh untuk satu periode perusahaan jasa dengan tingkat akurasi minimal 75% pada asesmen sumatif.</p>
+          <h3 style="font-size:15px;margin-top:16px">Keterkaitan dengan Profil Pelajar Pancasila</h3>
+          <p style="font-size:13.5px;line-height:1.7;margin-top:6px">Bernalar kritis (menganalisis transaksi), mandiri (menyelesaikan latihan individu), dan gotong royong (diskusi kelompok studi kasus UMKM).</p>
+        </div>
+      </div>
+
+      <!-- ATP -->
+      <div class="section" id="atp">
+        <div class="card">
+          <h2>Alur Tujuan Pembelajaran — Satu Semester</h2>
+          <div style="overflow-x:auto; margin-top:12px">
+          <table id="atpTable">
+            <tr><th>Minggu</th><th>Tujuan Pembelajaran</th><th>Materi</th><th>Aktivitas Guru</th><th>Aktivitas Siswa</th><th>Asesmen</th><th>JP</th></tr>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODUL AJAR -->
+      <div class="section" id="modul">
+        <div class="card">
+          <h2>Modul Ajar</h2>
+          <p style="color:var(--ink-soft);font-size:13.5px;margin-top:6px">Contoh modul ajar lengkap untuk 3 pertemuan awal. Format yang sama dapat diperluas untuk pertemuan 4–17 mengikuti struktur ATP.</p>
+          <div id="modulList" style="margin-top:14px"></div>
+        </div>
+      </div>
+
+      <!-- MATERI -->
+      <div class="section" id="materi">
+        <div class="card">
+          <h2>Materi Pembelajaran</h2>
+          <p style="color:var(--ink-soft);font-size:13.5px;margin-top:6px">BAB 1 dan BAB 2 disajikan lengkap sebagai contoh format. BAB 3–10 diringkas sebagai kerangka topik.</p>
+        </div>
+        <div id="materiFull"></div>
+        <div class="card">
+          <h3 style="font-size:15px">Kerangka BAB Lanjutan</h3>
+          <div id="materiRingkas" style="margin-top:8px; font-size:13.5px; line-height:1.8"></div>
+        </div>
+      </div>
+
+      <!-- BANK SOAL -->
+      <div class="section" id="banksoal">
+        <div class="card">
+          <h2>Bank Soal — Latihan Pilihan Ganda</h2>
+          <p style="color:var(--ink-soft);font-size:13.5px;margin-top:6px">Contoh 5 soal BAB 1–2. Skor dihitung otomatis di bawah.</p>
+          <div id="quizArea" style="margin-top:14px"></div>
+          <button onclick="scoreQuiz()">Selesai &amp; Lihat Skor</button>
+          <div id="quizResult" class="result-box" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- SIMULATOR -->
+      <div class="section" id="simulator">
+        <div class="card">
+          <h2>Simulator Jurnal Umum</h2>
+          <p style="color:var(--ink-soft);font-size:13.5px;margin-top:6px">Pilih transaksi, lalu tentukan akun yang didebit dan dikredit beserta nominalnya.</p>
+          <div style="margin-top:14px">
+            <label style="font-size:12px;color:var(--ink-soft)">Transaksi</label>
+            <select id="simTrx"></select>
+          </div>
+          <div class="grid2" style="margin-top:10px">
+            <div><label style="font-size:12px;color:var(--ink-soft)">Akun Debit</label><select id="simDebit"></select></div>
+            <div><label style="font-size:12px;color:var(--ink-soft)">Akun Kredit</label><select id="simKredit"></select></div>
+          </div>
+          <div style="margin-top:10px"><label style="font-size:12px;color:var(--ink-soft)">Nominal (Rp)</label><input type="number" id="simNominal"></div>
+          <button style="margin-top:12px" onclick="checkSim()">Periksa Jurnal</button>
+          <div id="simResult" class="result-box" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- GLOSARIUM -->
+      <div class="section" id="glosarium">
+        <div class="card">
+          <h2>Glosarium Akuntansi</h2>
+          <div class="search-box" style="margin-top:12px"><input placeholder="Cari istilah..." id="glosSearch" oninput="filterGlos()"></div>
+          <div id="glosList"></div>
+        </div>
+      </div>
+
+      <!-- REFERENSI -->
+      <div class="section" id="referensi">
+        <div class="card">
+          <h2>Referensi</h2>
+          <ul style="margin:12px 0 0 18px; font-size:13.5px; line-height:2">
+            <li>Kemendikbudristek — Capaian Pembelajaran Kurikulum Merdeka, Mata Pelajaran Akuntansi dan Keuangan Lembaga.</li>
+            <li>Pusat Perbukuan Kemendikbudristek — Buku Teks Akuntansi Dasar SMK/MAK.</li>
+            <li>Ikatan Akuntan Indonesia — Pernyataan Standar Akuntansi Keuangan (PSAK), ringkasan untuk pendidikan menengah kejuruan.</li>
+            <li>Modul ajar dan ATP dapat disesuaikan dengan kalender pendidikan satuan pendidikan masing-masing.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// NAV
+document.querySelectorAll('.nav-item').forEach(function(el){
+  el.addEventListener('click', function(){
+    document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+    document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+    el.classList.add('active');
+    var t = el.getAttribute('data-target');
+    document.getElementById(t).classList.add('active');
+    document.getElementById('pagetitle').textContent = el.textContent;
+  });
+});
+
+// CLOCK
+function tick(){
+  var d=new Date();
+  document.getElementById('clock').textContent = d.toLocaleTimeString('id-ID');
+}
+setInterval(tick,1000); tick();
+
+// STICKY NOTES (in-memory)
+var notes = ['Siapkan soal sumatif BAB 2 minggu depan.'];
+function renderNotes(){
+  var box = document.getElementById('notes');
+  box.innerHTML='';
+  notes.forEach(function(n){
+    var d=document.createElement('div'); d.className='sticky'; d.textContent=n; box.appendChild(d);
+  });
+}
+function addNote(){
+  var v = document.getElementById('noteInput').value.trim();
+  if(!v) return;
+  notes.push(v);
+  document.getElementById('noteInput').value='';
+  renderNotes();
+}
+renderNotes();
+
+// ATP DATA
+var atp = [
+ ["1","Menjelaskan pengertian, fungsi, dan bidang akuntansi","BAB 1: Pengantar Akuntansi","Ceramah interaktif, tanya jawab","Menyimak, berdiskusi","Diagnostik lisan","4"],
+ ["2","Mengidentifikasi profesi dan pengguna informasi akuntansi","BAB 1 lanjutan","Studi kasus profesi akuntan","Presentasi kelompok kecil","Formatif tugas","4"],
+ ["3","Menyusun persamaan dasar akuntansi","BAB 2: Persamaan Dasar Akuntansi","Demonstrasi contoh transaksi","Latihan soal","Formatif tertulis","4"],
+ ["4","Menganalisis pengaruh transaksi terhadap persamaan akuntansi","BAB 2 lanjutan","Bimbingan latihan","Mengerjakan 10 transaksi","Formatif","4"],
+ ["5","Menjelaskan aturan debit-kredit","BAB 3: Jurnal Umum","Penjelasan konsep, contoh","Latihan menjurnal","Formatif","4"],
+ ["6","Mencatat transaksi ke jurnal umum","BAB 3 lanjutan","Pendampingan individu","Latihan mandiri 15 transaksi","Formatif","4"],
+ ["7","Memposting jurnal ke buku besar","BAB 4: Buku Besar","Demonstrasi posting","Latihan posting akun","Formatif","4"],
+ ["8","Menyusun buku besar bentuk skontro","BAB 4 lanjutan","Diskusi kelompok","Latihan kelompok","Formatif","4"],
+ ["9","Menyusun neraca saldo","BAB 5: Neraca Saldo","Demonstrasi penyusunan","Latihan mandiri","Formatif","4"],
+ ["10","Asesmen Tengah Semester","Review BAB 1–5","Review materi","Mengerjakan ujian","Sumatif Tengah Semester","4"],
+ ["11","Menjelaskan jenis penyesuaian","BAB 6: Jurnal Penyesuaian","Ceramah, contoh soal","Diskusi kasus","Formatif","4"],
+ ["12","Membuat jurnal penyesuaian","BAB 6 lanjutan","Pendampingan latihan","Latihan mandiri","Formatif","4"],
+ ["13","Menyusun kertas kerja 10 kolom","BAB 7: Kertas Kerja","Demonstrasi worksheet","Studi kasus kelompok","Formatif","4"],
+ ["14","Menyusun laporan laba rugi dan perubahan modal","BAB 8: Laporan Keuangan","Demonstrasi penyusunan","Latihan mandiri","Formatif","4"],
+ ["15","Menyusun neraca dan laporan arus kas sederhana","BAB 8 lanjutan","Bimbingan individu","Latihan mandiri","Formatif","4"],
+ ["16","Membuat jurnal penutup dan jurnal pembalik","BAB 9–10","Demonstrasi, diskusi","Latihan mandiri","Formatif","4"],
+ ["17","Asesmen Akhir Semester","Review seluruh siklus akuntansi","Review komprehensif","Mengerjakan ujian","Sumatif Akhir Semester","4"]
+];
+var atpTable = document.getElementById('atpTable');
+atp.forEach(function(r){
+  var tr=document.createElement('tr');
+  r.forEach(function(c){var td=document.createElement('td'); td.textContent=c; tr.appendChild(td);});
+  atpTable.appendChild(tr);
+});
+
+// MODUL AJAR
+var modules = [
+{judul:"Modul Ajar 1 — Pengantar Akuntansi", body:`
+<b>Identitas:</b> Akuntansi Dasar · Fase E · 4 JP<br>
+<b>Kompetensi Awal:</b> Siswa memahami dasar transaksi jual-beli sehari-hari.<br>
+<b>Profil Pelajar Pancasila:</b> Bernalar kritis, mandiri.<br>
+<b>Sarana:</b> Papan tulis, proyektor, LKPD.<br>
+<b>Model/Metode:</b> Discovery learning, ceramah &amp; diskusi.<br>
+<b>Tujuan Pembelajaran:</b> Peserta didik mampu menjelaskan pengertian, fungsi, dan bidang akuntansi.<br>
+<b>Pemahaman Bermakna:</b> Akuntansi adalah bahasa bisnis yang membantu pengambilan keputusan.<br>
+<b>Pertanyaan Pemantik:</b> Bagaimana pemilik warung tahu untung atau rugi?<br>
+<b>Kegiatan Pendahuluan:</b> Apersepsi, motivasi, penyampaian tujuan (15 menit).<br>
+<b>Kegiatan Inti:</b> Penjelasan konsep, diskusi kelompok studi kasus UMKM, presentasi (60 menit).<br>
+<b>Kegiatan Penutup:</b> Refleksi, kesimpulan, tugas rumah (15 menit).<br>
+<b>Asesmen Formatif:</b> Tanya jawab lisan dan lembar kerja.<br>
+<b>Remedial:</b> Pengulangan konsep bagi siswa dengan skor di bawah 75.<br>
+<b>Pengayaan:</b> Mencari contoh profesi akuntansi di lingkungan sekitar.`},
+{judul:"Modul Ajar 2 — Profesi dan Pengguna Informasi Akuntansi", body:`
+<b>Tujuan Pembelajaran:</b> Peserta didik mampu mengidentifikasi profesi akuntansi dan pihak pengguna informasi akuntansi.<br>
+<b>Kegiatan Inti:</b> Studi kasus profesi (akuntan publik, internal, pemerintah), diskusi kelompok kecil, presentasi hasil.<br>
+<b>Asesmen:</b> Formatif berupa tugas kelompok dan lembar observasi sikap.`},
+{judul:"Modul Ajar 3 — Persamaan Dasar Akuntansi", body:`
+<b>Tujuan Pembelajaran:</b> Peserta didik mampu menyusun persamaan dasar akuntansi (Aset = Liabilitas + Ekuitas) dari transaksi sederhana.<br>
+<b>Kegiatan Inti:</b> Demonstrasi 5 contoh transaksi, latihan mandiri 10 transaksi, pembahasan bersama.<br>
+<b>Asesmen:</b> Formatif tertulis, penilaian ketepatan perhitungan.`}
+];
+var modBox = document.getElementById('modulList');
+modules.forEach(function(m,i){
+  var h=document.createElement('div'); h.className='accordion-head'; h.innerHTML=m.judul+'<span>+</span>';
+  var b=document.createElement('div'); b.className='accordion-body'; b.innerHTML=m.body;
+  h.addEventListener('click', function(){ b.classList.toggle('open'); });
+  modBox.appendChild(h); modBox.appendChild(b);
+});
+
+// MATERI FULL (BAB 1 & 2)
+var materiFullData = [
+{bab:"BAB 1 — Pengantar Akuntansi", body:`
+<p><b>Pengertian:</b> Akuntansi adalah proses mengidentifikasi, mencatat, mengklasifikasi, dan mengikhtisarkan transaksi keuangan untuk menghasilkan informasi yang berguna bagi pengambil keputusan.</p>
+<p style="margin-top:8px"><b>Fungsi Akuntansi:</b> pencatatan, pelaporan, pengendalian, dan dasar pengambilan keputusan.</p>
+<p style="margin-top:8px"><b>Bidang Akuntansi:</b> akuntansi keuangan, akuntansi manajemen, akuntansi biaya, auditing, akuntansi pajak, akuntansi pemerintahan.</p>
+<p style="margin-top:8px"><b>Profesi Akuntansi:</b> akuntan publik, akuntan intern, akuntan pemerintah, akuntan pendidik.</p>
+<p style="margin-top:8px"><b>Pengguna Informasi:</b> internal (manajemen, karyawan) dan eksternal (investor, kreditur, pemerintah, masyarakat).</p>
+<p style="margin-top:8px"><b>Rangkuman:</b> Akuntansi berperan sebagai bahasa bisnis yang menjembatani data transaksi dengan keputusan ekonomi.</p>`},
+{bab:"BAB 2 — Persamaan Dasar Akuntansi", body:`
+<p><b>Aset</b> adalah sumber daya yang dimiliki dan dikendalikan perusahaan. <b>Liabilitas</b> adalah kewajiban kepada pihak lain. <b>Ekuitas</b> adalah hak pemilik atas aset setelah dikurangi liabilitas.</p>
+<p style="margin-top:8px"><b>Rumus:</b> Aset = Liabilitas + Ekuitas</p>
+<p style="margin-top:8px"><b>Contoh Analisis Transaksi:</b></p>
+<table style="margin-top:6px"><tr><th>No</th><th>Transaksi</th><th>Pengaruh</th></tr>
+<tr><td>1</td><td>Pemilik menyetor modal Rp10.000.000 kas</td><td>Kas (+), Modal (+)</td></tr>
+<tr><td>2</td><td>Membeli peralatan tunai Rp2.000.000</td><td>Peralatan (+), Kas (−)</td></tr>
+<tr><td>3</td><td>Menerima pendapatan jasa Rp1.500.000</td><td>Kas (+), Modal (+)</td></tr>
+<tr><td>4</td><td>Membayar beban listrik Rp300.000</td><td>Kas (−), Modal (−)</td></tr>
+</table>
+<p style="margin-top:8px;font-size:12.5px;color:var(--ink-soft)">Latihan lengkap 30 transaksi dapat dikembangkan dari pola tabel di atas.</p>`}
+];
+var mfBox = document.getElementById('materiFull');
+materiFullData.forEach(function(m){
+  var c=document.createElement('div'); c.className='card';
+  c.innerHTML='<h3 style="font-size:16px">'+m.bab+'</h3><div style="margin-top:8px;font-size:13.5px;line-height:1.7">'+m.body+'</div>';
+  mfBox.appendChild(c);
+});
+var ringkasBab = [
+"BAB 3 — Jurnal Umum: aturan debit-kredit, kode akun, langkah menjurnal, 25+ contoh transaksi.",
+"BAB 4 — Buku Besar: posting, saldo, bentuk T dan skontro.",
+"BAB 5 — Neraca Saldo: fungsi dan penyusunan.",
+"BAB 6 — Jurnal Penyesuaian: beban dibayar dimuka, pendapatan diterima dimuka, penyusutan, piutang tak tertagih, persediaan.",
+"BAB 7 — Kertas Kerja: worksheet 10 kolom, studi kasus lengkap.",
+"BAB 8 — Laporan Keuangan: laba rugi, perubahan modal, neraca, arus kas sederhana.",
+"BAB 9 — Jurnal Penutup.",
+"BAB 10 — Jurnal Pembalik."
+];
+document.getElementById('materiRingkas').innerHTML = ringkasBab.map(function(t){return '<div>• '+t+'</div>';}).join('');
+
+// QUIZ
+var quiz = [
+{q:"1. Akuntansi berfungsi sebagai...", opts:["Alat promosi","Bahasa bisnis untuk pengambilan keputusan","Alat hukum pidana","Sistem pemasaran"], ans:1},
+{q:"2. Rumus persamaan dasar akuntansi yang benar adalah...", opts:["Aset = Liabilitas − Ekuitas","Aset = Liabilitas + Ekuitas","Ekuitas = Aset + Liabilitas","Liabilitas = Aset + Ekuitas"], ans:1},
+{q:"3. Membeli peralatan secara tunai akan...", opts:["Menambah kas dan menambah peralatan","Mengurangi kas dan menambah peralatan","Mengurangi kas dan mengurangi modal","Tidak berpengaruh pada aset"], ans:1},
+{q:"4. Pihak eksternal pengguna informasi akuntansi adalah...", opts:["Manajemen","Karyawan bagian produksi","Investor dan kreditur","Direktur operasional"], ans:2},
+{q:"5. Profesi akuntan yang bekerja secara independen memeriksa laporan keuangan disebut...", opts:["Akuntan intern","Akuntan publik","Akuntan pendidik","Akuntan pemerintah"], ans:1}
+];
+var qBox=document.getElementById('quizArea');
+quiz.forEach(function(item,i){
+  var d=document.createElement('div'); d.className='quiz-q';
+  var html='<div style="font-weight:600;font-size:13.5px">'+item.q+'</div>';
+  item.opts.forEach(function(o,j){
+    html+='<label class="quiz-opt"><input type="radio" name="q'+i+'" value="'+j+'"> '+o+'</label>';
+  });
+  d.innerHTML=html; qBox.appendChild(d);
+});
+function scoreQuiz(){
+  var score=0;
+  quiz.forEach(function(item,i){
+    var sel=document.querySelector('input[name="q'+i+'"]:checked');
+    if(sel && parseInt(sel.value)===item.ans) score++;
+  });
+  var box=document.getElementById('quizResult');
+  box.style.display='block';
+  var pct=Math.round(score/quiz.length*100);
+  box.className='result-box '+(pct>=60?'ok':'bad');
+  box.textContent='Skor: '+score+'/'+quiz.length+' ('+pct+'%)';
+}
+
+// SIMULATOR JURNAL
+var trxList = [
+{t:"Pemilik menyetor modal awal berupa kas", debit:"Kas", kredit:"Modal"},
+{t:"Membeli peralatan kantor secara tunai", debit:"Peralatan", kredit:"Kas"},
+{t:"Menerima pendapatan jasa secara tunai", debit:"Kas", kredit:"Pendapatan Jasa"},
+{t:"Membayar beban listrik dan air", debit:"Beban Listrik & Air", kredit:"Kas"},
+{t:"Membeli perlengkapan secara kredit", debit:"Perlengkapan", kredit:"Utang Usaha"}
+];
+var akunList = ["Kas","Peralatan","Perlengkapan","Modal","Pendapatan Jasa","Beban Listrik & Air","Utang Usaha"];
+var trxSel=document.getElementById('simTrx'), dSel=document.getElementById('simDebit'), kSel=document.getElementById('simKredit');
+trxList.forEach(function(t,i){var o=document.createElement('option'); o.value=i; o.textContent=t.t; trxSel.appendChild(o);});
+akunList.forEach(function(a){
+  var o1=document.createElement('option'); o1.textContent=a; dSel.appendChild(o1);
+  var o2=document.createElement('option'); o2.textContent=a; kSel.appendChild(o2.cloneNode(true));
+});
+function checkSim(){
+  var trx = trxList[trxSel.value];
+  var box=document.getElementById('simResult');
+  box.style.display='block';
+  var debitOk = dSel.value===trx.debit, kreditOk = kSel.value===trx.kredit;
+  var nominal = document.getElementById('simNominal').value;
+  if(debitOk && kreditOk && nominal){
+    box.className='result-box ok';
+    box.textContent='Benar. Jurnal: (D) '+trx.debit+' Rp'+Number(nominal).toLocaleString('id-ID')+' | (K) '+trx.kredit+' Rp'+Number(nominal).toLocaleString('id-ID');
+  } else {
+    box.className='result-box bad';
+    box.textContent='Belum tepat. Akun debit seharusnya "'+trx.debit+'" dan akun kredit "'+trx.kredit+'". Pastikan nominal terisi.';
+  }
+}
+
+// GLOSARIUM
+var glosarium = [
+["Aset","Sumber daya yang dimiliki dan dikendalikan perusahaan."],
+["Liabilitas","Kewajiban perusahaan kepada pihak lain."],
+["Ekuitas","Hak pemilik atas aset setelah dikurangi liabilitas."],
+["Debit","Sisi kiri dalam pencatatan akuntansi."],
+["Kredit","Sisi kanan dalam pencatatan akuntansi."],
+["Jurnal Umum","Catatan kronologis seluruh transaksi keuangan."],
+["Buku Besar","Kumpulan akun yang merangkum transaksi dari jurnal."],
+["Neraca Saldo","Daftar saldo seluruh akun buku besar pada suatu tanggal."],
+["Jurnal Penyesuaian","Jurnal untuk menyesuaikan akun agar mencerminkan kondisi sebenarnya."],
+["Kertas Kerja","Alat bantu penyusunan laporan keuangan berupa worksheet."],
+["Laporan Laba Rugi","Laporan yang menunjukkan pendapatan dan beban selama periode tertentu."],
+["Neraca","Laporan posisi keuangan perusahaan pada tanggal tertentu."],
+["Jurnal Penutup","Jurnal untuk menutup akun nominal pada akhir periode."],
+["Jurnal Pembalik","Jurnal pada awal periode untuk membalik penyesuaian tertentu."],
+["Piutang","Hak menagih perusahaan kepada pihak lain."],
+["Utang","Kewajiban perusahaan yang harus dilunasi."],
+["Modal","Investasi pemilik pada perusahaan."],
+["Pendapatan","Kenaikan manfaat ekonomi selama periode akuntansi."],
+["Beban","Penurunan manfaat ekonomi selama periode akuntansi."],
+["Penyusutan","Alokasi biaya aset tetap selama masa manfaatnya."],
+["Perusahaan Jasa","Perusahaan yang menghasilkan dan menjual jasa."],
+["Akun Riil","Akun yang saldonya dilaporkan pada neraca."],
+["Akun Nominal","Akun yang saldonya dilaporkan pada laporan laba rugi."],
+["Saldo Normal","Posisi saldo yang wajar dimiliki suatu jenis akun."],
+["Bukti Transaksi","Dokumen sumber pencatatan akuntansi."]
+];
+function renderGlos(list){
+  document.getElementById('glosList').innerHTML = list.map(function(g){
+    return '<div class="glos-item"><b>'+g[0]+'</b> — '+g[1]+'</div>';
+  }).join('');
+}
+renderGlos(glosarium);
+function filterGlos(){
+  var q=document.getElementById('glosSearch').value.toLowerCase();
+  renderGlos(glosarium.filter(function(g){return g[0].toLowerCase().indexOf(q)>-1 || g[1].toLowerCase().indexOf(q)>-1;}));
+}
+</script>
+</body>
+</html>
